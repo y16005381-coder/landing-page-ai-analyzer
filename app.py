@@ -4,10 +4,19 @@ from bs4 import BeautifulSoup
 from openai import OpenAI
 
 # ========== 配置区 ==========
-# 这里换成你自己的 API Key（推荐用 DeepSeek 或通义千问）
-API_KEY = "sk-xxxxxxxxxxxxxxxx"
-BASE_URL = "https://api.deepseek.com/v1"  # DeepSeek 的地址
-MODEL_NAME = "deepseek-chat"
+# ========== 配置区 ==========
+# ========== 配置区 ==========
+# 尝试从 Secrets 读取（云端），如果没有则使用本地默认值（本地调试用）
+try:
+    API_KEY = st.secrets["API_KEY"]
+    BASE_URL = st.secrets["BASE_URL"]
+    MODEL_NAME = st.secrets["MODEL_NAME"]
+except Exception:
+    API_KEY = "sk-你的真实APIKey填这里"   # 本地测试时才填，上传前建议留空或删掉
+    BASE_URL = "https://api.deepseek.com/v1"
+    MODEL_NAME = "deepseek-chat"
+
+client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
